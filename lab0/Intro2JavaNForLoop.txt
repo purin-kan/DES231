@@ -1,4 +1,6 @@
-
+/**
+* Provided File of Lab 0 Self Study
+*/
 public class Intro2JavaNForLoop {
     
     /*Exercise 1: Complete the method makeMultTable(int M) that generates a multiplication table from an input number M, 
