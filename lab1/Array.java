@@ -1,3 +1,5 @@
+package lab1;
+
 public class Array {
   final int size; // The maximum capacity of A
   int[] A;
@@ -56,7 +58,7 @@ public class Array {
       System.out.println("Array is empty");
       return -1;
     }
-    return A[--load];
+    return A[load--];
   }
 
   // Ex4 f
