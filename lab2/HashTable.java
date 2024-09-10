@@ -18,10 +18,10 @@ public class HashTable {
 		int orig_addr = 0;
 		// Step1: Find an original address according to the Hash function
 		if (hfunction == "Division") {
-			orig_addr = 0; // Replace 0 with your code
+			orig_addr = key % hsize; // Replace 0 with your code
 		} else if (hfunction == "Folding") {
 			int C = 100;
-			orig_addr = 0; // Replace 0 with your code
+			orig_addr = ((int) Math.floor(key/C) + key % C) % hsize; // Replace 0 with your code
 		}
 
 		//Step2: check collision. if collision, find an open address
@@ -29,21 +29,21 @@ public class HashTable {
 		int fi = 0; // fi = f(i)
 		int addr = orig_addr;
 
-		while (0) // Replace 0 with your code
+		while (H[addr] != 0) // Replace 0 with your code
 
 		{
 			if (openAddrType == "Linear") {
-				fi = 0; // Replace 0 with your code
+				fi = i; // Replace 0 with your code
 			} else if (openAddrType == "Quadratic") {
-				fi = 0; // Replace 0 with your code
+				fi = i * i; // Replace 0 with your code
 			}
 
-			addr = 0; // Replace 0 with your code
+			addr = (orig_addr + fi) % hsize; // Replace 0 with your code
 
 			i++;
 		}
 
-		H[0] = 0; // Replace 0 with your code
+		H[addr] = key; // Replace 0 with your code
 
 	}
 
@@ -57,10 +57,10 @@ public class HashTable {
 
 		//Step1: Find an original address according to the Hash function
 		if (hfunction == "Division") {
-			orig_addr = 0; // Replace 0 with your code
+			orig_addr = key % hsize; // Replace 0 with your code
 		} else if (hfunction == "Folding") {
 			int C = 100;
-			orig_addr = 0; // Replace 0 with your code
+			orig_addr = ((int) Math.floor(key/C) + key % C) % hsize; // Replace 0 with your code
 		}
 
 		//Step2: check collision. if collision, find the key in an open address
@@ -68,15 +68,15 @@ public class HashTable {
 		int fi = 0; // fi = f(i)
 		int addr = orig_addr;
 
-		while (0) { // Replace 0 with your code
+		while (H[addr] != key) { // Replace 0 with your code
 
 			if (openAddrType == "Linear") {
-				fi = 0; // Replace 0 with your code
+				fi = i; // Replace 0 with your code
 			} else if (openAddrType == "Quadratic") {
-				fi = 0; // Replace 0 with your code
+				fi = i * i; // Replace 0 with your code
 
 			}
-			addr = 0; // Replace 0 with your code
+			addr = (orig_addr + fi) % hsize; // Replace 0 with your code
 
 			i++;
 		}
@@ -90,10 +90,10 @@ public class HashTable {
 
         	// Step1: Find the original address according to the Hash function
         	if (hfunction.equals("Division")) {
-            		orig_addr = 0; // Replace 0 with your code
+            		orig_addr = key % hsize; // Replace 0 with your code
         		} else if (hfunction.equals("Folding")) {
             			int C = 100;
-            			orig_addr = 0; // Replace 0 with your code
+            			orig_addr = ((int) Math.floor(key/C) + key % C) % hsize; // Replace 0 with your code
         		}
 
         	// Step2: Find the key and mark it as deleted
@@ -103,12 +103,12 @@ public class HashTable {
 
         	while (H[addr] != key) { 
             		if (openAddrType.equals("Linear")) {
-                		fi = 0 /*Replace 0 with your code*/;
+                		fi = i /*Replace 0 with your code*/;
             		} else if (openAddrType.equals("Quadratic")) {
-                		fi = 0 /*Replace 0 with your code*/;
+                		fi = i * i /*Replace 0 with your code*/;
             		}
 
-            		addr = /* Complete the code */;
+            		addr = (orig_addr + fi) % hsize; // Replace 0 with your code
 
             		i++;
         	}
@@ -222,28 +222,28 @@ public class HashTable {
         System.out.println("Delete 26 from HashTable1");
         HashTable1.delete(26);
         HashTable1.print();
-        System.out.println("\nThe correct answer is: 78 65 0 39 0 0 45 59 0 74 0 0 12");
+        System.out.println("\nThe correct answer is: \n78 65 0 39 0 0 45 59 0 74 0 0 12");
 
         System.out.println("\n-------------------------------------------------------");
 
         System.out.println("Delete 26 from HashTable2");
         HashTable2.delete(26);
         HashTable2.print();
-        System.out.println("\nThe correct answer is: 78 65 0 39 0 0 45 59 0 74 0 0 12");
+        System.out.println("\nThe correct answer is: \n78 65 0 39 0 0 45 59 0 74 0 0 12");
 
         System.out.println("\n-------------------------------------------------------");
 
         System.out.println("Delete 53 from HashTable3");
         HashTable3.delete(53);
         HashTable3.print();
-        System.out.println("\nThe correct answer is: 0 0 6655 87 0 1278 2566 401 0 0 0 2093 0 1020 0 0 0");
+        System.out.println("\nThe correct answer is: \n0 0 6655 87 0 1278 2566 401 0 0 0 2093 0 1020 0 0 0");
 
         System.out.println("\n-------------------------------------------------------");
 
         System.out.println("Delete 53 from HashTable4");
         HashTable4.delete(53);
         HashTable4.print();
-        System.out.println("\nThe correct answer is: 0 0 6655 87 0 1278 2566 0 0 401 0 2093 0 1020 0 0 0");
+        System.out.println("\nThe correct answer is: \n0 0 6655 87 0 1278 2566 0 0 401 0 2093 0 1020 0 0 0");
 
 	}
 

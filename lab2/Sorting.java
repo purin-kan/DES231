@@ -75,9 +75,12 @@ public class Sorting {
 		for (int i = 0; i < A.length - 1; i++) {
 			int minIndex = i; // Index of smallest remaining value.
 			minIndex = findIndexSmallest(A, i, A.length-1);
-			swap(A, minIndex, i);
+			if (i != minIndex) {
+				swap(A, minIndex, i);
+				// System.out.println("swapped " + A[i] + " and " + A[minIndex]);
+				printArray(A);
+			}
 		}
-		printArray(A);
 	}
 
 	/**
@@ -95,9 +98,9 @@ public class Sorting {
 			int temp = A[i];
 			for (int j = i - 1; j >= 0 && A[j] > temp; j--) {
 				swap(A, j, j + 1);
+				printArray(A);
 			}
 		}
-		printArray(A);
 	}
 
 	/**
@@ -118,7 +121,7 @@ public class Sorting {
 		int[] leftHalf = new int[midIndex];
 		int[] rightHalf = new int[inputLength - midIndex];
 
-        System.arraycopy(A, 0, leftHalf, 0, midIndex);
+    System.arraycopy(A, 0, leftHalf, 0, midIndex);
 		System.arraycopy(A, midIndex, rightHalf, 0, inputLength - midIndex);
 		
 		// Ex3. Complete this method.
