@@ -1,4 +1,4 @@
-package lab3;
+// package lab3;
 /**
  * The {@code Node} class represents a node in a singly linked list.
  *

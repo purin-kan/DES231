@@ -1,4 +1,4 @@
-package lab3;
+// package lab3;
 class TestList {
 	public static void main(String[] args) {
 

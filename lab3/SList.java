@@ -52,6 +52,16 @@ public class SList<T> {
 	 */
 	void addLast(T element) {
 		// Ex.1 a) complete the method
+		SNode<T> newNode = new SNode<T>(element);
+
+		// If the list is empty, the new node is both the first and last node
+		if (last == null) {
+			first = newNode;
+		} else {
+			last.next = newNode;
+		}
+		last = newNode;
+		size++;
 	}
 
 	/**
@@ -65,6 +75,20 @@ public class SList<T> {
 	 */
 	void addAtIndex(int index, T element) {
 		// Ex.1 b) complete the method
+		if (index == 0) {
+			addFirst(element);
+		} else if (index == size) {
+			addLast(element);
+		} else {
+			SNode<T> newNode = new SNode<T>(element);
+			SNode<T> temp = first;
+			for (int i = 0; i < index - 1; i++) {
+				temp = temp.next;
+			}
+			newNode.next = temp.next;
+			temp.next = newNode;
+			size++;
+		}
 	}
 
 	/**
@@ -93,7 +117,19 @@ public class SList<T> {
 	 */
 	T removeLast() {
 		// Ex.2 complete the method
-		return null;
+		if (size == 0) return null;
+
+		SNode<T> temp = first;
+		while (temp.next != last) {
+			temp = temp.next;
+		}
+		T removedElement = temp.next.element;
+
+		temp.next = null;
+		last = temp;
+		size--;
+
+		return removedElement;
 	}
 
 	/**
@@ -105,7 +141,17 @@ public class SList<T> {
 	 */
 	T removeAtIndex(int index) {
 		// Ex.3 complete the method
-		return null;
+		if (size == 0) return null;
+
+		SNode<T> temp = first;
+		for (int i = 0; i < index - 1; i++) {
+			temp = temp.next;
+		}
+		T removedElement = temp.next.element;
+		temp.next = temp.next.next;
+
+		size--;
+		return removedElement;
 	}
 
 
@@ -137,13 +183,14 @@ public class SList<T> {
         SNode previous = null;
         SNode current = first;
         SNode next = null;
-        while (/*condition*/) { // Complete the condition
+        while (current != null) { // Complete the condition
             next = current.next;
-            current.next = /* update next pointer */;
-            previous = /* move previous */;
-            current = /* move current */;
+            current.next = previous;
+            previous = current.next;
+            current = current.next;
         }
         first = previous;
+		// FIXME: reverse method is wrong, causing walker to be null. 
     }
 	
 	/**
@@ -156,8 +203,27 @@ public class SList<T> {
 	 */
 	int search(T item) {
 		// Ex.5 complete the method
-		return 0;
+		SNode<T> temp = first;
+		int index = 0;
 
+		// while (temp != null) {
+		// 	if (temp.element == item) {
+		// 		return index;
+		// 	}
+		// 	temp = temp.next;
+		// 	index++;
+		// }
+
+		for (int i = 0; i < size; i++) {
+			if (temp.element == item) {
+				return index;
+			}
+			temp = temp.next;
+			index++;
+		}
+
+
+		return -1;
 	}
 
 	/**
@@ -174,7 +240,4 @@ public class SList<T> {
 		}
 		System.out.println("\n-----");
 	}
-
-
-
 }
