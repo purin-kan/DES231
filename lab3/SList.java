@@ -142,6 +142,8 @@ public class SList<T> {
 	T removeAtIndex(int index) {
 		// Ex.3 complete the method
 		if (size == 0) return null;
+		else if (index == 0) return removeFirst();
+		else if (index == size - 1) return removeLast();
 
 		SNode<T> temp = first;
 		for (int i = 0; i < index - 1; i++) {
