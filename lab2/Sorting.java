@@ -73,8 +73,7 @@ public class Sorting {
 	 */
 	static void SelectionSort(int[] A) { // Ex 1a Complete the method SelectionSort
 		for (int i = 0; i < A.length - 1; i++) {
-			int minIndex = i; // Index of smallest remaining value.
-			minIndex = findIndexSmallest(A, i, A.length-1);
+			int minIndex = findIndexSmallest(A, i, A.length-1);
 			if (i != minIndex) {
 				swap(A, minIndex, i);
 				// System.out.println("swapped " + A[i] + " and " + A[minIndex]);
@@ -121,7 +120,7 @@ public class Sorting {
 		int[] leftHalf = new int[midIndex];
 		int[] rightHalf = new int[inputLength - midIndex];
 
-    System.arraycopy(A, 0, leftHalf, 0, midIndex);
+    	System.arraycopy(A, 0, leftHalf, 0, midIndex);
 		System.arraycopy(A, midIndex, rightHalf, 0, inputLength - midIndex);
 		
 		// Ex3. Complete this method.
