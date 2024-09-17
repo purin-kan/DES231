@@ -75,10 +75,13 @@ class TestList {
 		System.out.print("Your result is : ");
 		ilist.printHorizontal();
 
+		// System.out.println("first " + ilist.first.element);
+		// System.out.println("last " + ilist.last.element);
+
 		// ============================ Ex.5 ================================
 		// continue on from the previous exercise
 		// Uncomment this part of code to test Ex. 5
-		// The result should be : cherry is found at index 2
+		// The result should be : cherry is found at index 0
 		// The result should be : mango is not found
 
 		System.out.println("\nTest search");
@@ -89,7 +92,9 @@ class TestList {
 		strSList.addFirst("banana");
 		strSList.addFirst("cherry");
 
-		String item = "cherry";
+		strSList.printHorizontal();
+
+		String item = "banana";
 		System.out.println("search for " + item);
 		if (strSList.search(item) != -1)
 			System.out.println(item + " is found at index " + strSList.search(item));

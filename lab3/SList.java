@@ -147,8 +147,11 @@ public class SList<T> {
 		for (int i = 0; i < index - 1; i++) {
 			temp = temp.next;
 		}
-		T removedElement = temp.next.element;
-		temp.next = temp.next.next;
+		SNode<T> removedNode = temp.next;
+		temp.next = removedNode.next;
+		removedNode.next = null;
+
+		T removedElement = removedNode.element;
 
 		size--;
 		return removedElement;
@@ -186,11 +189,11 @@ public class SList<T> {
         while (current != null) { // Complete the condition
             next = current.next;
             current.next = previous;
-            previous = current.next;
-            current = current.next;
+            previous = current;
+            current = next;
         }
+				last = first;
         first = previous;
-		// FIXME: reverse method is wrong, causing walker to be null. 
     }
 	
 	/**
@@ -204,25 +207,15 @@ public class SList<T> {
 	int search(T item) {
 		// Ex.5 complete the method
 		SNode<T> temp = first;
-		int index = 0;
+		int i = 0;
 
-		// while (temp != null) {
-		// 	if (temp.element == item) {
-		// 		return index;
-		// 	}
-		// 	temp = temp.next;
-		// 	index++;
-		// }
-
-		for (int i = 0; i < size; i++) {
-			if (temp.element == item) {
-				return index;
+		while (temp != null) {
+			if (temp.element.equals(item)) {
+				return i;
 			}
+			i += 1;
 			temp = temp.next;
-			index++;
 		}
-
-
 		return -1;
 	}
 
