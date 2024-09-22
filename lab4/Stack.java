@@ -151,8 +151,36 @@ class Stack<T> {
 	 */
 	public static Integer evalPostfix(String[] input) {// Exercise 5
 		Stack<Integer> S = new Stack<Integer>();
-		// Write your code here
-		return null;
+
+		for (String character : input) {
+			if (isInteger(character)) {
+				S.push(Integer.parseInt(character));
+			} else {
+				int operand1 = S.pop();
+				int operand2 = S.pop();
+
+				switch (character) {
+					case "+":
+						S.push(operand2 + operand1);
+						break;
+					case "-":
+						S.push(operand2 - operand1);
+						break;
+					case "*":
+						S.push(operand2 * operand1);
+						break;
+					case "/":
+						S.push(operand2 / operand1);
+						break;
+					case "%":
+						S.push(operand2 % operand1);
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		return S.peek();
 	}
 
 }
