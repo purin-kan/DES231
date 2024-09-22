@@ -21,7 +21,7 @@ class Stack<T> {
 	 * @param element The element to be pushed onto the stack.
 	 */
 	void push(T element) {// Exercise 1a
-
+		list.addFirst(element);
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Stack<T> {
 	 * @return The element removed from the top of the stack.
 	 */
 	T pop() {// Exercise 1b
-		return null;
+		return list.removeFirst();
 	}
 
 	/**
@@ -39,7 +39,7 @@ class Stack<T> {
 	 * @return The element at the top of the stack.
 	 */
 	T peek() {// Exercise 1c
-		return null;
+		return list.first.element;
 	}
 
 	/**
@@ -75,7 +75,10 @@ class Stack<T> {
 	 */
 	static void binaryConversion(int x) {// Exercise 2
 		Stack<Integer> answer = new Stack<Integer>();
-		// Write your code here
+		while (x > 0) {
+			answer.push(x % 2);
+			x /= 2;
+		}
 		answer.list.printHorizontal();
 	}
 
@@ -85,7 +88,19 @@ class Stack<T> {
 	 * @return A new stack with the reversed order of elements.
 	 */
 	Stack<T> reverseStack() {// Exercise 3
-		return null;
+		Stack<T> reversed = new Stack<T>();
+		Stack<T> temp = new Stack<T>();
+		while (!isEmpty()) {
+			T element = pop();
+			temp.push(element);
+			reversed.push(element);
+		}
+
+		while (!temp.isEmpty()) {
+			push(temp.pop());
+		}
+
+		return reversed;
 	}
 
 	/**
@@ -95,7 +110,21 @@ class Stack<T> {
 	 * @return {@code true} if the string is a palindrome, {@code false} otherwise.
 	 */
 	static boolean isPalindrome(String word) {// Exercise 4
-		return false;
+		Stack<Character> original = new Stack<Character>();
+		
+		for (int i = 0; i < word.length(); i++) {
+			original.push(word.charAt(i));
+		}
+		
+		Stack<Character> reversed = original.reverseStack();
+
+		while (!original.isEmpty()) {
+			if (!original.pop().equals(reversed.pop())) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	/**
