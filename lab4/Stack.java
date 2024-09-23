@@ -119,7 +119,7 @@ class Stack<T> {
 		Stack<Character> reversed = original.reverseStack();
 
 		while (!original.isEmpty()) {
-			if (!original.pop().equals(reversed.pop())) {
+			if (!original.pop().toString().toLowerCase().equals(reversed.pop().toString().toLowerCase())) {
 				return false;
 			}
 		}
@@ -156,24 +156,24 @@ class Stack<T> {
 			if (isInteger(character)) {
 				S.push(Integer.parseInt(character));
 			} else {
-				int operand1 = S.pop();
 				int operand2 = S.pop();
+				int operand1 = S.pop();
 
 				switch (character) {
 					case "+":
-						S.push(operand2 + operand1);
+						S.push(operand1 + operand2);
 						break;
 					case "-":
-						S.push(operand2 - operand1);
+						S.push(operand1 - operand2);
 						break;
 					case "*":
-						S.push(operand2 * operand1);
+						S.push(operand1 * operand2);
 						break;
 					case "/":
-						S.push(operand2 / operand1);
+						S.push(operand1 / operand2);
 						break;
 					case "%":
-						S.push(operand2 % operand1);
+						S.push(operand1 % operand2);
 						break;
 					default:
 						break;

@@ -110,7 +110,7 @@ class TestStack {
 		System.out.println("a palindrome.");
 		System.out.println();
 		
-		// The result should be : Reliefpfeiler is not a palindrome.
+		// The result should be : Reliefpfeiler is a palindrome.
 		System.out.println("Your result is : ");
 		System.out.print(word4 + " is ");
 		if (!Stack.isPalindrome(word4))
