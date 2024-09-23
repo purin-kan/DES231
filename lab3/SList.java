@@ -81,12 +81,12 @@ public class SList<T> {
 			addLast(element);
 		} else {
 			SNode<T> newNode = new SNode<T>(element);
-			SNode<T> temp = first;
+			SNode<T> current = first;
 			for (int i = 0; i < index - 1; i++) {
-				temp = temp.next;
+				current = current.next;
 			}
-			newNode.next = temp.next;
-			temp.next = newNode;
+			newNode.next = current.next;
+			current.next = newNode;
 			size++;
 		}
 	}
