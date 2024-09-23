@@ -119,14 +119,14 @@ public class SList<T> {
 		// Ex.2 complete the method
 		if (size == 0) return null;
 
-		SNode<T> temp = first;
-		while (temp.next != last) {
-			temp = temp.next;
+		SNode<T> current = first;
+		while (current.next != last) {
+			current = current.next;
 		}
-		T removedElement = temp.next.element;
+		T removedElement = current.next.element;
 
-		temp.next = null;
-		last = temp;
+		current.next = null;
+		last = current;
 		size--;
 
 		return removedElement;
@@ -145,12 +145,12 @@ public class SList<T> {
 		else if (index == 0) return removeFirst();
 		else if (index == size - 1) return removeLast();
 
-		SNode<T> temp = first;
+		SNode<T> current = first;
 		for (int i = 0; i < index - 1; i++) {
-			temp = temp.next;
+			current = current.next;
 		}
-		SNode<T> removedNode = temp.next;
-		temp.next = removedNode.next;
+		SNode<T> removedNode = current.next;
+		current.next = removedNode.next;
 		removedNode.next = null;
 
 		T removedElement = removedNode.element;
@@ -194,7 +194,7 @@ public class SList<T> {
             previous = current;
             current = next;
         }
-				last = first;
+		last = first;
         first = previous;
     }
 	
@@ -208,15 +208,15 @@ public class SList<T> {
 	 */
 	int search(T item) {
 		// Ex.5 complete the method
-		SNode<T> temp = first;
+		SNode<T> current = first;
 		int i = 0;
 
-		while (temp != null) {
-			if (temp.element.equals(item)) {
+		while (current != null) {
+			if (current.element.equals(item)) {
 				return i;
 			}
 			i += 1;
-			temp = temp.next;
+			current = current.next;
 		}
 		return -1;
 	}
