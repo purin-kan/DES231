@@ -194,8 +194,8 @@ public class SList<T> {
             previous = current;
             current = next;
         }
-		last = first;
-        first = previous;
+				last = first;
+				first = previous;
     }
 	
 	/**
