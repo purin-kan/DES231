@@ -75,6 +75,9 @@ class Stack<T> {
 	 */
 	static void binaryConversion(int x) {// Exercise 2
 		Stack<Integer> answer = new Stack<Integer>();
+		if (x == 0) {
+			answer.push(0);
+		}
 		while (x > 0) {
 			answer.push(x % 2);
 			x /= 2;
