@@ -70,10 +70,11 @@ public class Queue<T> {
 	Queue<T> copyQueue() { 
 		// Exercise 2
 		Queue<T> Q2 = new Queue<T>();
-		SNode<T> walker = list.first;
-		while (walker != null) {
-			Q2.list.addLast(walker.element);
-			walker = walker.next;
+		int size = list.size;
+		for (int i = 0; i < size; i++) {
+			T tmp = this.dequeue();
+			Q2.enqueue(tmp);
+			this.enqueue(tmp);
 		}
 		return Q2;
 	}
@@ -91,18 +92,19 @@ public class Queue<T> {
 			return false;
 		}
 
-		SNode<T> walker1 = list.first;
-		SNode<T> walker2 = Q2.list.first;
+		boolean isIdentical = true;
+		int size = Q2.list.size;
 
-		while (walker1 != null && walker2 != null) {
-			if (walker1.element != walker2.element) {
-				return false;
+		for (int i = 0; i < size; i++) {
+			T e1 = Q2.dequeue();
+			T e2 = this.dequeue();
+			if (e1 != e2) {
+				isIdentical = false;
 			}
-			walker1 = walker1.next;
-			walker2 = walker2.next;
+			Q2.enqueue(e1);
+			this.enqueue(e2);
 		}
-
-		return true;
+		return isIdentical;
 	}
 
 	/**
