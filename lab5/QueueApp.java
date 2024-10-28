@@ -81,8 +81,8 @@ public class QueueApp {
 			if (isPrefix(x, y, z)) {
 				return evalPrefixString(x, y, z);
 			}
-			
-		// more items in queue
+
+			// more items in queue
 		} else {
 			do {
 				if (isPrefix(x, y, z)) {
@@ -94,7 +94,7 @@ public class QueueApp {
 						z = Q.dequeue();
 					}
 
-				// x, y, z is not a prefix expression
+					// x, y, z is not a prefix expression
 				} else {
 					Q.enqueue(x);
 					x = y;
@@ -123,34 +123,35 @@ public class QueueApp {
 			return null;
 		}
 	}
-	
+
 	/**
-     * Simulates the "Hot Potato" game using a queue.
-     *
-     * @param children Array of children's names participating in the game.
-     * @param passes   Number of passes after which the child holding the potato is removed.
-     * @return The name of the winner.
-     */
+	 * Simulates the "Hot Potato" game using a queue.
+	 *
+	 * @param children Array of children's names participating in the game.
+	 * @param passes   Number of passes after which the child holding the potato is
+	 *                 removed.
+	 * @return The name of the winner.
+	 */
 
-    public static String playHotPotato(String[] children, int passes) {
-        Queue<String> queue = new Queue<>();
+	public static String playHotPotato(String[] children, int passes) {
+		Queue<String> queue = new Queue<>();
 
-        for (String child : children) {
-					// Exercise 5
-          //Complete the code, Add children to the queue
-					queue.enqueue(child);
-        }
+		for (String child : children) {
+			// Exercise 5
+			// Complete the code, Add children to the queue
+			queue.enqueue(child);
+		}
 
-        while (queue.getSize() > 1) {
-            // Pass the potato the specified number of times
-            for (int i = 0; i < passes; i++) {
-                /* Remove child from front and add to rear (simulate passing)*/
-								queue.enqueue(queue.dequeue());
-            }
-            /* Remove child holding the potato after specified passes */
-						queue.dequeue();
-					}
-        /*Return the winner*/
-				return queue.dequeue();
-    }
+		while (queue.getSize() > 1) {
+			// Pass the potato the specified number of times
+			for (int i = 0; i < passes; i++) {
+				/* Remove child from front and add to rear (simulate passing) */
+				queue.enqueue(queue.dequeue());
+			}
+			/* Remove child holding the potato after specified passes */
+			queue.dequeue();
+		}
+		/* Return the winner */
+		return queue.dequeue();
+	}
 }
