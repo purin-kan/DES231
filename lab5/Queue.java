@@ -123,6 +123,4 @@ public class Queue<T> {
 	public int getSize() {
 		return list.getSize();
 	}
-
-
 }

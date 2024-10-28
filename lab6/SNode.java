@@ -23,5 +23,4 @@ class SNode<T> {
 		this.element = element;
 		next = null;
 	}
-
 }
