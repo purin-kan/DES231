@@ -36,22 +36,18 @@ public class BT<T> {
 	int findHeight(BTNode<T> root) {
 		// Exercise 1 ////////////////
 		if (root == null) {
-		// Replace the following statement with your code.
-			return -1;
+			return 0;
 		} else if (isLeaf(root)) {
-		// Replace the following statement with your code.
-			return -1;
-		} else {	
-		// Replace the following statement with your code.
-			return -1;
-		}		
+			return 1;
+		} else {
+			return 1 + Math.max(findHeight(root.left), findHeight(root.right));
+		}
 	}
 
 	boolean isLeaf(BTNode<T> root) {
 		if (root != null && root.left == null && root.right == null) {
 			return true;
-		} 
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -67,11 +63,10 @@ public class BT<T> {
 		int LH = findHeight(root.left);
 		int RH = findHeight(root.right);
 		int B = Math.abs(LH - RH);
-		
+
 		if (B <= 1) {
 			return (isBalanced(root.left) && isBalanced(root.right));
-		} 
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -84,6 +79,15 @@ public class BT<T> {
 	/* Inorder traversal from a subtree */
 	protected void inorder(BTNode<T> root) {
 		// Exercise 2 (a) Complete this method
+		if (root != null) {
+			if (isLeaf(root)) {
+				System.out.print(root.element + " ");
+			} else {
+				inorder(root.left);
+				System.out.print(root.element + " ");
+				inorder(root.right);
+			}
+		}
 	}
 
 	/* Postorder traversal from the root */
@@ -94,7 +98,15 @@ public class BT<T> {
 	/* Postorder traversal from a subtree */
 	protected void postorder(BTNode<T> root) {
 		// Exercise 2 (b) Complete this method
-
+		if (root != null) {
+			if (isLeaf(root)) {
+				System.out.print(root.element + " ");
+			} else {
+				postorder(root.left);
+				postorder(root.right);
+				System.out.print(root.element + " ");
+			}
+		}
 	}
 
 	/* Preorder traversal from the root */
@@ -104,30 +116,47 @@ public class BT<T> {
 
 	/* Preorder traversal from a subtree */
 	protected void preorder(BTNode<T> root) {
-	    if (root != null) {
-	       if (isLeaf(root)) {
-	    	   System.out.print(root.element + " ");
-	       } 
-	       else {
-	    	   System.out.print(root.element + " ");
-	    	   preorder(root.left);
-	    	   preorder(root.right);
-	       }
-	    }
+		if (root != null) {
+			if (isLeaf(root)) {
+				System.out.print(root.element + " ");
+			} else {
+				System.out.print(root.element + " ");
+				preorder(root.left);
+				preorder(root.right);
+			}
+		}
 	}
 
 	void PrintDFT() {
 		// Exercise 3 ////////////////
 		Stack<BTNode<T>> S = new Stack<BTNode<T>>();
 		S.push(root);
-		//insert your code here
+		while(!S.isEmpty()) {
+			BTNode<T> tmp = S.pop();
+			if (tmp.right != null) {
+				S.push(tmp.right);
+			}
+			if (tmp.left != null) {
+				S.push(tmp.left);
+			}
+			System.out.print(tmp.element + " ");
+		}
 	}
 
 	void PrintBFT() {
 		// Exercise 4 ////////////////
 		Queue<BTNode<T>> Q = new Queue<BTNode<T>>();
 		Q.enqueue(root);
-		//insert your code here
+		while(!Q.isEmpty()) {
+			BTNode<T> tmp = Q.dequeue();
+			if (tmp.left != null) {
+				Q.enqueue(tmp.left);
+			}
+			if (tmp.right != null) {
+				Q.enqueue(tmp.right);
+			}
+			System.out.print(tmp.element + " ");
+		}
 	}
 
 	static boolean hasHigherPriority(String sign1, String sign2) {
@@ -151,71 +180,72 @@ public class BT<T> {
 	}
 
 	// Exercise 5 ///////////////////////////////////////////////
-	public static boolean isOperator(String item)
-	{ 
+	public static boolean isOperator(String item) {
 		if (item.equals("+") || item.equals("-") || item.equals("*") || item.equals("/") || item.equals("%"))
 			return true;
 		else
 			return false;
 	}
-     
 
- 
-    public static BT<String> makeExpressionTree(String [] infixArr)
-	{   
+	public static BT<String> makeExpressionTree(String[] infixArr) {
 		Stack<BT<String>> BTStack = new Stack<BT<String>>();
-        Stack<BTNode<String>> parent = new Stack<BTNode<String>>(); //for keeping parent nodes
-        String item;
-        int i=0;
-        while(i!=infixArr.length){
-        	item = infixArr[i]; //read item from array 
-        	// Case 1: if item it is an open parenthesis
-        	if (item.equals("(")) {
-        		//add your code here
-		
-        	} 
-        	else if (isOperator(item)){
-        		BTNode<String> temp = new BTNode<String>(item);
-        		if (parent.isEmpty()) { // stack is empty
-        			// add your code here
-        		}
-        		else {// stack is not empty
-              
-        			if(hasHigherPriority(item, parent.peek().element)) {  
-        				// add your code here
-            		
-            		
-        			}
-        			else {
-        				// add your code here
+		Stack<BTNode<String>> parent = new Stack<BTNode<String>>(); // for keeping parent nodes
+		String item;
+		int i = 0;
+		while (i != infixArr.length) {
+			item = infixArr[i]; // read item from array
+			// Case 1: if item it is an open parenthesis
+			if (item.equals("(")) {
+				parent.push(new BTNode<String>(item));
 
-        			}
-        		}
-        	}
-        	// Case3: if item is a close parenthesis  
-        	else if (item.equals(")")) {
-        		while (parent.peek().element.equals("(") == false) {
-        			BTNode<String> root = parent.pop();
-        			BT<String> Rsubtree = BTStack.pop();
-        			BT<String> Lsubtree = BTStack.pop();
-        			BT<String> newBT = new BT<String>(root, Lsubtree, Rsubtree);
-        			BTStack.push(newBT);
-        		}
-        		parent.pop();
-        	}
-        	else {// Case 4: it is not an operator
-        		BT<String> newTree = new BT<String>(item);
-        		// add your code here
-        	}
-        	i++;
-        }
-        while (!parent.isEmpty()) {
-        	BTNode<String> root = parent.pop();
-        	BT<String> Rsubtree = BTStack.pop();
-        	BT<String> Lsubtree = BTStack.pop();
-        	BT<String> newBT = new BT<String>(root, Lsubtree, Rsubtree);
-        	// add your code here
-        }
-        return BTStack.pop();
-    }
+			// Case 2: item is an operator
+			} else if (isOperator(item)) {
+				BTNode<String> temp = new BTNode<String>(item);
+				if (parent.isEmpty()) { // stack is empty
+					parent.push(new BTNode<String>(item));
+				} else {// stack is not empty
+
+					if (hasHigherPriority(item, parent.peek().element)) {
+						parent.push(new BTNode<String>(item));
+
+					} else {
+						do {
+							BTNode<String> operator = parent.pop();
+							BT<String> rightSubTree = BTStack.pop();
+							BT<String> leftSubTree = BTStack.pop();
+
+							BT<String> newBT = new BT<String>(operator, rightSubTree, leftSubTree);
+							BTStack.push(newBT);
+
+						} while (!parent.isEmpty() && !hasHigherPriority(item, parent.peek().element));
+						parent.push(temp);
+					}
+				}
+			}
+
+			// Case3: if item is a close parenthesis
+			else if (item.equals(")")) {
+				while (!parent.peek().element.equals("(")) {
+					BTNode<String> root = parent.pop();
+					BT<String> Rsubtree = BTStack.pop();
+					BT<String> Lsubtree = BTStack.pop();
+					BT<String> newBT = new BT<String>(root, Lsubtree, Rsubtree);
+					BTStack.push(newBT);
+				}
+				parent.pop();
+			} else {// Case 4: it is not an operator
+				BT<String> newTree = new BT<String>(item);
+				BTStack.push(newTree);
+			}
+			i++;
+		}
+		while (!parent.isEmpty()) {
+			BTNode<String> root = parent.pop();
+			BT<String> Rsubtree = BTStack.pop();
+			BT<String> Lsubtree = BTStack.pop();
+			BT<String> newBT = new BT<String>(root, Lsubtree, Rsubtree);
+			BTStack.push(newBT);
+		}
+		return BTStack.pop();
+	}
 }
