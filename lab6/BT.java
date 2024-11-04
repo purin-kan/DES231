@@ -190,6 +190,7 @@ public class BT<T> {
 		int i = 0;
 		while (i != infixArr.length) {
 			item = infixArr[i]; // read item from array
+
 			// Case 1: if item it is an open parenthesis
 			if (item.equals("(")) {
 				parent.push(new BTNode<String>(item));
@@ -199,7 +200,7 @@ public class BT<T> {
 				BTNode<String> temp = new BTNode<String>(item);
 				if (parent.isEmpty()) { // stack is empty
 					parent.push(new BTNode<String>(item));
-				} else {// stack is not empty
+				} else { // stack is not empty
 
 					if (hasHigherPriority(item, parent.peek().element)) {
 						parent.push(new BTNode<String>(item));
@@ -210,7 +211,7 @@ public class BT<T> {
 							BT<String> rightSubTree = BTStack.pop();
 							BT<String> leftSubTree = BTStack.pop();
 
-							BT<String> newBT = new BT<String>(operator, rightSubTree, leftSubTree);
+							BT<String> newBT = new BT<String>(operator, leftSubTree, rightSubTree);
 							BTStack.push(newBT);
 
 						} while (!parent.isEmpty() && !hasHigherPriority(item, parent.peek().element));
@@ -229,12 +230,16 @@ public class BT<T> {
 					BTStack.push(newBT);
 				}
 				parent.pop();
-			} else {// Case 4: it is not an operator
+
+			// Case 4: it is not an operator
+			} else {
 				BT<String> newTree = new BT<String>(item);
 				BTStack.push(newTree);
 			}
+
 			i++;
 		}
+		
 		while (!parent.isEmpty()) {
 			BTNode<String> root = parent.pop();
 			BT<String> Rsubtree = BTStack.pop();
