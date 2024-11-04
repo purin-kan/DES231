@@ -45,11 +45,7 @@ public class BT<T> {
 	}
 
 	boolean isLeaf(BTNode<T> root) {
-		if (root != null && root.left == null && root.right == null) {
-			return true;
-		} else {
-			return false;
-		}
+            return root != null && root.left == null && root.right == null;
 	}
 
 	boolean isBalanced() {
