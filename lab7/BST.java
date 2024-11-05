@@ -61,11 +61,14 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 		boolean currentIsLeftChild = true;
 
 		while (current != null) {
-			parent = current;
-			if (item.compareTo(current.element) < 0) {
+			// we need to search for the deleted node first
+			if (item.compareTo(current.element) < 0) { // if item < current element, go left
+				parent = current;
 				current = current.left;
 				currentIsLeftChild = true;
-			} else if (item.compareTo(current.element) > 0) {
+
+			} else if (item.compareTo(current.element) > 0) { // if item > current element, go right
+				parent = current;
 				current = current.right;
 				currentIsLeftChild = false;
 			} else {
