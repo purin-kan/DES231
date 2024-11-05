@@ -23,11 +23,26 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 		// Ex1: Complete this program
 		if (root == null) {
 			// Create a new root
+			root = new BTNode<T>(newdata);
 		} else {
 			// Locate the parent node
 			BTNode<T> parent = null;
 			BTNode<T> current = root;
 			// insert your code
+			while (current != null) {
+				parent = current;
+				if (newdata.compareTo(current.element) <= 0) {
+					current = current.left;
+				} else {
+					current = current.right;
+				}
+			}
+
+			if (newdata.compareTo(parent.element) < 0) {
+				parent.left = new BTNode<T>(newdata);
+			} else {
+				parent.right = new BTNode<T>(newdata);
+			}
 		}
 
 		size++;
@@ -46,7 +61,14 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 		boolean currentIsLeftChild = true;
 
 		while (current != null) {
-			// insert your code
+			parent = current;
+			if (item.compareTo(current.element) < 0) {
+				current = current.left;
+				currentIsLeftChild = true;
+			} else {
+				current = current.right;
+				currentIsLeftChild = false;
+			}
 		}
 
 		// Case 0: item is not in the tree
@@ -56,27 +78,52 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 
 		T temp = current.element;
 		// Case 1: current is the leave
-
 		if (current.left == null && current.right == null) {
 			// insert your code
+			if (currentIsLeftChild) {
+				parent.left = null;
+			} else {
+				parent.right = null;
+			}
 		}
 
 		// Case 2: If the deleted node has one child
 		// Case 2.1: if its child node is on the right
 		if ((current.left == null)) { // If only has one right child or no children.
 			if (currentIsLeftChild) {
-				// insert your code
+				if (parent == null) {
+					root = current.right;
+				} else {
+					parent.left = current.right;
+					current.right = null;
+				}
 			} else {
-				// insert your code
+				if (parent == null) {
+					root = current.right;
+				} else {
+					parent.right = current.right;
+					current.right = null;
+				}
 			}
 		}
 		// Case 2.2: If its child node is on the left
-		else if ((current.right == null)) { // Only one left child
+		else if (current.right == null) { // Only one left child
 			if (currentIsLeftChild) {
-				// insert your code
+				if (parent == null) {
+					root = current.left;
+				} else {
+					parent.left = current.left;
+					current.left = null;
+				}
 			} else {
-				// insert your code
-			}
+				if (parent == null) {
+					root = current.left;
+				} else {
+					parent.right = current.left;
+					current.left = null;
+				}
+			} 
+		
 		} else { // Case 3: Have both children
 			BTNode<T> maxleft = current.left;
 			BTNode<T> maxleftParent = current;
@@ -85,14 +132,20 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 				maxleft = maxleft.right;
 			}
 			current.element = maxleft.element;
-			if (maxleft.left == null && maxleft.right == null) { // Case 3.1 if maxleft is a leave, then ..
-				//insert your code
-			} 
-			else if (maxleft.left != null) { // Case 3.2 if maxleft has a left child, then .
-				//insert your code
-			} 
-			else if (maxleftParent == current) { // Case 3.3 if maxleft is leftchild of current, then ..
-				//insert your code
+
+			// Case 3.1: if maxleft is a leaf
+			if (maxleft.left == null && maxleft.right == null) {
+				maxleftParent.right = null;
+
+			// Case 3.2: if maxleft has a left child
+			} else if (maxleft.left != null) {
+				maxleftParent.right = maxleft.left;
+				maxleft.left = null;
+
+			// Case 3.3: if maxleft is left child of node to be deleted
+			} else if (maxleftParent == current) {
+				current.left = maxleft.left;
+				maxleft.left = null;
 			}
 		}
 		size--;
@@ -101,10 +154,18 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 	// ---------------------------------------------------------
 
 	// Search for the data returns true if it finds the data or otherwise false
-	public boolean search(T data) { 
+	public boolean search(T data) {
 		// Ex 3: Complete this section.
-		
-		//replace the following line with your code
+		BTNode<T> current = root;
+		while (current != null) {
+			if (data.compareTo(current.element) < 0) {
+				current = current.left;
+			} else if (data.compareTo(current.element) > 0) {
+				current = current.right;
+			} else {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -117,9 +178,11 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 	// ----------------------------------------------
 	BTNode<T> findSmallest(BTNode<T> start) {
 		// Ex 4 a): Complete this section.
-		
-		//replace the following line with your code
-		return null;
+		BTNode<T> smallest = start;
+		while (smallest.left != null) {
+			smallest = smallest.left;
+		}
+		return smallest;
 	}
 
 	// ----------------------------------------------
@@ -128,11 +191,13 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 	}
 
 	// ----------------------------------------------
-	BTNode<T> findLargest(BTNode<T> start) { 
+	BTNode<T> findLargest(BTNode<T> start) {
 		// Ex 4 b): Complete this section.
-		
-		//replace the following line with your code
-		return null;
+		BTNode<T> largest = start;
+		while (largest.right != null) {
+			largest = largest.right;
+		}
+		return largest;
 	}
 
 	/** Get the number of nodes in the tree */
@@ -163,14 +228,14 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 		return list; // Return an array of nodes
 	}
 
-	 /** Exercise 5: Implement method to find the closest value in BST */
+	/** Exercise 5: Implement method to find the closest value in BST */
 	public T findClosestValue(T target) {
 		return findClosestValue(root, target, root.element);
 	}
 
 	private T findClosestValue(BTNode<T> node, T target, T closest) {
 		if (node == null) {
-			/*base case return value*/; 
+			return closest; 
 		}
 
 		// Convert the target and node elements to Double for easier comparison
@@ -179,19 +244,19 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 		Double closestVal = Double.valueOf(closest.toString());
 
 		// Update the closest value if the current node's value is closer to the target
-		if (/* complete the condition */) {
-			/* update T closest with the current node's value*/;
+		if (Math.abs(targetVal - nodeVal) < Math.abs(targetVal - closestVal)) {
+			closest = node.element;
 		}
 
 		// Recursively search left or right subtree based on comparison
 		// use x.compareTo(y) to check if target is more or lesser than node.element
 
-		if (/* condition to traverse left subtree*/) {
-			return /* recursive call for left subtree */;
-		} else if (/*condition to traverse right subtree*/) {
-			return /* recursive call for right subtree */; 
+		if (target.compareTo(node.element) < 0) {
+			return findClosestValue(node.left, target, closest);
+		} else if (target.compareTo(node.element) > 0) {
+			return findClosestValue(node.right, target, closest); 
 		} else {
-			return /* Exact match */; 
+			return node.element; 
 		}
 	}
 
