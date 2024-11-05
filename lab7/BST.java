@@ -65,9 +65,11 @@ public class BST<T extends Comparable<T>> extends BT<T> {
 			if (item.compareTo(current.element) < 0) {
 				current = current.left;
 				currentIsLeftChild = true;
-			} else {
+			} else if (item.compareTo(current.element) > 0) {
 				current = current.right;
 				currentIsLeftChild = false;
+			} else {
+				break;
 			}
 		}
 
