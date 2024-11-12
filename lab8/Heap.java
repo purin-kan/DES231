@@ -25,8 +25,14 @@ public class Heap {
      * @param currentIndex The index of the current element.
      */
 	void reheapUp(int currentIndex) {
-		 // Exercise 1
-		//  add your code here 
+		// Exercise 1
+		if (currentIndex  > 0) {
+			int parentIndex = (int) ((currentIndex - 1) / 2);
+			if (hArray[currentIndex] > hArray[parentIndex]) {
+				swap(hArray, currentIndex, parentIndex);
+			}
+			reheapUp(parentIndex);
+		}
 	}
 
 	/**
@@ -36,7 +42,9 @@ public class Heap {
      */
 	void insert(int data) {
 		// Exercise 2
-		// add your code here 
+		hArray[load] = data;
+		load++;
+		reheapUp(load - 1);
 	}
 
 	 /**
@@ -46,7 +54,24 @@ public class Heap {
      */
 	void reheapDown(int currentIndex) {
 		// Exercise 3
-		// add your code here 
+		int lastIndex = load - 1;
+
+		if ((2 * currentIndex + 1) <= lastIndex) {
+			int leftChildIndex = 2 * currentIndex + 1;
+			int rightChildIndex = 2 * currentIndex + 2;
+			int largerChildIndex;
+
+			if (hArray[leftChildIndex] > hArray[rightChildIndex]) {
+				largerChildIndex = leftChildIndex;
+			} else {
+				largerChildIndex = rightChildIndex;
+			}
+
+			if (hArray[currentIndex] < hArray[largerChildIndex]) {
+				swap(hArray, currentIndex, largerChildIndex);
+				reheapDown(largerChildIndex);
+			}
+		}
 	}
 
 	/**
@@ -56,8 +81,15 @@ public class Heap {
      */
 	int deleteRoot() {
 		// Exercise 4a
-		// add your code here 
-		return -1;
+		int temp = hArray[0];
+
+		if (load >= 1) {
+			hArray[0] = hArray[load - 1];
+			hArray[load - 1] = 0;
+			load--;
+			reheapDown(0);
+		}
+		return temp;
 	}
 
 	/**
@@ -65,7 +97,10 @@ public class Heap {
      */
 	void makeHeapSort() {
 		// Exercise 4b
-		// add your code here 
+		while (load > 0) {
+			System.out.print(deleteRoot() + " ");
+		}
+		System.out.println();
 	}
 
 	/**
@@ -110,11 +145,10 @@ public class Heap {
 		System.out.println();
 	}
 
-//optional
 	// Exercise 5: Priority Queue Operations
     /** Inserts an element into the priority queue. */
     public void enqueue(int data) {
-        /*complete the code */;
+        insert(data);
     }
 
     /** Extracts and returns the maximum element (highest priority) from the priority queue. 
@@ -122,7 +156,7 @@ public class Heap {
 	 *  @return the dequeue element
 	*/
     public int dequeue() {
-        /*complete the code*/;
+        return deleteRoot();
 	}
 
 	/**
@@ -131,6 +165,6 @@ public class Heap {
      * @return True if the priority queue is empty, false otherwise.
      */
 	public boolean isEmpty() {
-		/* complete the code */;
+		return load == 0;
 	}
 }
