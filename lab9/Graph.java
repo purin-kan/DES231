@@ -119,9 +119,11 @@ public class Graph<T> {
 		temp.data = newVertex;
 
 		if (vertexCount == 0) {
-			// TODO: add your code here
+			firstList = temp;
+			lastList = temp;
 		} else {
-			// TODO: add your code here
+			lastList.nextList = temp;
+			lastList = temp;
 		}
 		vertexCount++;
 	}
@@ -140,7 +142,11 @@ public class Graph<T> {
 		AdjList<T> current = firstList;
 
 		while (current != null) {
-			// TODO: add your code here
+			if (current.data == data) {
+				return current;
+			} else {
+				current = current.nextList;
+			}
 		}
 		return null;
 	}
@@ -161,7 +167,10 @@ public class Graph<T> {
 		// Creates a new member (edge) with the specified destination vertex and weight
 		Member<T> newMember = new Member<T>(toData, weight);
 
-		// TODO: add your code here
+		newMember.nextMember = fromAdjList.firstMember;
+		fromAdjList.firstMember = newMember;
+		fromAdjList.outdegree++;
+		edgeCount++;
 	}
 
 	/**
@@ -179,11 +188,20 @@ public class Graph<T> {
 			return;
 
 		if (fromAdjList.firstMember != null && toData.equals(fromAdjList.firstMember.adjVertex)) {
-			// TODO: add your code here
+			fromAdjList.firstMember = fromAdjList.firstMember.nextMember;
+			fromAdjList.outdegree--;
+			edgeCount--;
 		} else if (fromAdjList.firstMember != null && !toData.equals(fromAdjList.firstMember.adjVertex)) {
 			Member<T> temp = fromAdjList.firstMember;
 			while (temp != null && temp.nextMember != null) {
-				// TODO: add your code here
+				if (temp.nextMember.adjVertex.equals(toData)) {
+					temp.nextMember = temp.nextMember.nextMember;
+					fromAdjList.outdegree--;
+					edgeCount--;
+					break;
+				} else {
+					temp = temp.nextMember;
+				}
 			}
 		}
 	}
@@ -203,16 +221,27 @@ public class Graph<T> {
 
 		while (currentAdjList != null) {
 			if (!currentAdjList.data.equals(vertex)) {
-				// TODO: add your code here
+				deleteEdge(currentAdjList.data, vertex);
 			} else {
 				if (currentAdjList == firstList) {
 					firstList = currentAdjList.nextList;
+					edgeCount -= currentAdjList.outdegree;
+					vertexCount--;
 				} else if (currentAdjList == lastList) {
-					// TODO: add your code here
+					lastList = prevAdjList;
+					lastList.nextList = null;
+					edgeCount -= currentAdjList.outdegree;
+					vertexCount--;
 				} else {
-					// TODO: add your code here
+					edgeCount -= currentAdjList.outdegree;
+					vertexCount--;
+					prevAdjList.nextList = currentAdjList.nextList;
+					currentAdjList = currentAdjList.nextList;
 				}
 			}
+
+			prevAdjList = currentAdjList;
+			currentAdjList = currentAdjList.nextList;
 		}
 	}
 
